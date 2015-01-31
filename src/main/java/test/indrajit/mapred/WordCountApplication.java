@@ -1,4 +1,4 @@
-package test.indrajit.hadoop.wordjob;
+package test.indrajit.mapred;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -13,10 +13,11 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-public class WordJob extends Configured implements Tool {
+
+public class WordCountApplication extends Configured implements Tool{
 
     public static void main(String[] args) throws Exception {
-        int res = ToolRunner.run(new Configuration(), new WordJob(), args);
+        int res = ToolRunner.run(new Configuration(), new WordCountApplication(), args);
         System.exit(res);
     }
 
@@ -31,8 +32,8 @@ public class WordJob extends Configured implements Tool {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
-        job.setMapperClass(WordMapper.class);
-        job.setReducerClass(WordReducer.class);
+        job.setMapperClass(WordCountMapper.class);
+        job.setReducerClass(WordCountReducer.class);
 
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TextOutputFormat.class);
@@ -40,7 +41,7 @@ public class WordJob extends Configured implements Tool {
         FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-        job.setJarByClass(WordJob.class);
+        job.setJarByClass(WordCountApplication.class);
 
         job.submit();
         return 0;
