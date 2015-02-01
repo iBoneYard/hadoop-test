@@ -23,7 +23,7 @@ public class JobMapper extends Mapper<Object, Text, Text, IntWritable> {
             System.out.println(key.toString());
             String refString = matcher.group(0).replace("ref=\"", "").replace("ref='", "");
             String[] splitString = refString.split("/");
-            Text refText = new Text(key.toString() + splitString[splitString.length - 1]);
+            Text refText = new Text(splitString[splitString.length - 1]);
             output.write(refText, JobMapper.ONE);
         }
     }
