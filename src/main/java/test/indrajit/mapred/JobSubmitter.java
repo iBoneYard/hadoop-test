@@ -14,10 +14,10 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 
-public class WordCountApplication extends Configured implements Tool{
+public class JobSubmitter extends Configured implements Tool{
 
     public static void main(String[] args) throws Exception {
-        int res = ToolRunner.run(new Configuration(), new WordCountApplication(), args);
+        int res = ToolRunner.run(new Configuration(), new JobSubmitter(), args);
         System.exit(res);
     }
 
@@ -32,8 +32,8 @@ public class WordCountApplication extends Configured implements Tool{
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
-        job.setMapperClass(WordCountMapper.class);
-        job.setReducerClass(WordCountReducer.class);
+        job.setMapperClass(JobMapper.class);
+        job.setReducerClass(JobReducer.class);
 
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TextOutputFormat.class);
@@ -41,7 +41,7 @@ public class WordCountApplication extends Configured implements Tool{
         FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-        job.setJarByClass(WordCountApplication.class);
+        job.setJarByClass(JobSubmitter.class);
 
         job.submit();
         return 0;
