@@ -1,6 +1,8 @@
 package test.indrajit.mapred;
 
-import org.apache.commons.net.ntp.TimeStamp;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
@@ -63,7 +65,7 @@ public class JobSubmitter extends Configured implements Tool {
         // set main job class
         System.out.println("Job class : " + JobSubmitter.class.getName());
         job.setJarByClass(JobSubmitter.class);
-        job.setJobName("Itemref Counter_" + TimeStamp.getCurrentTime().toString());
+        job.setJobName("Itemref Counter_" + new Timestamp(new Date().getTime()));
 
         // submit job
         System.out.println("Submitting the job");
